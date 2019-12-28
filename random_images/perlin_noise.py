@@ -1,6 +1,6 @@
 import noise
 import pygame
-import temp_file
+from . import temp_file
 import random
 
 
