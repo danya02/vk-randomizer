@@ -2,6 +2,7 @@ import random
 import colorsys
 from . import perlin_noise
 from . import two_d_geometry
+from . import two_d_plots
 
 width=512
 height=512
@@ -69,6 +70,10 @@ def color_tris():
 def color_tris():
     return two_d_geometry.circles(width,height)
 
+@topics('math','2d','plot','polynominal')
+def polynom():
+    return two_d_plots.plot_random_polynominal()
+
 def get_by_topic(*topic_list):
     opts = topic_dict[topic_list[0]]
     for i in topic_list[1:]:
@@ -76,7 +81,7 @@ def get_by_topic(*topic_list):
     return random.choice(list(opts))()
 
 def get_any():
-    return get_by_topic('circles')
+    return get_by_topic('polynominal')
     actions = set()
     for i in topic_dict:
         actions.update(topic_dict[i])
