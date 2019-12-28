@@ -1,5 +1,8 @@
 import pygame
-from . import temp_file
+try:
+    from . import temp_file
+except:
+    import temp_file
 import random
 import colorsys
 
@@ -31,5 +34,19 @@ def straight_lines_mono(width, height, line_count=random.randint(3,50),
     pygame.image.save(surface, path)
     return path
 
+def triangles(width, height, tri_count=random.randint(2,30), line_widths=range(0,12),
+        fg_color_fn=lambda: pygame.Color(*(int(i*255) for i in colorsys.hsv_to_rgb(random.random(),random.random(),1))),
+        bg_color=pygame.Color(random.randint(0,128), random.randint(0,128), random.randint(0,128))):
+    surface = pygame.Surface((width, height))
+    surface.fill(pygame.Color(*bg_color))
+    for i in range(tri_count):
+        verts = [(random.randint(0,width), random.randint(0,height)) for n in range(3)]
+        pygame.draw.polygon(surface, pygame.Color(*fg_color_fn()), verts, random.choice(list(line_widths)+[0]*4))
+    path = temp_file.TemporaryFile.generate_new('png')
+    pygame.image.save(surface, path)
+    return path
+
+    
+
 if __name__=='__main__':
-    print(straight_lines_mono(512,512).persist())
+    print(triangles(512,512).persist())

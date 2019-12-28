@@ -55,11 +55,15 @@ def mono_lines():
 def color_lines():
     return two_d_geometry.straight_lines_color(width, height)
 
-def get_any():
-    actions = set()
-    for i in topic_dict:
-        actions.update(topic_dict[i])
-    return random.choice(actions)()
+@topics('geometry','2d','polygons','triangles','colorful')
+def color_tris():
+    return two_d_geometry.triangles(width,height)
+
+# commented out because it doesn't look all that nice.
+#@topics('geometry','2d','polygons','triangles','monochrome')
+#def mono_tris():
+#    n = random.random()
+#    return two_d_geometry.triangles(width,height, bg_color=(0,0,0), fg_color_fn=lambda: (int(i*255) for i in colorsys.hsv_to_rgb(n,1,1)))
 
 def get_by_topic(*topic_list):
     opts = topic_dict[topic_list[0]]
