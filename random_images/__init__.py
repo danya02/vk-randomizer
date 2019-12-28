@@ -65,6 +65,10 @@ def color_tris():
 #    n = random.random()
 #    return two_d_geometry.triangles(width,height, bg_color=(0,0,0), fg_color_fn=lambda: (int(i*255) for i in colorsys.hsv_to_rgb(n,1,1)))
 
+@topics('geometry','2d','circles','continuous','arcs','colorful')
+def color_tris():
+    return two_d_geometry.circles(width,height)
+
 def get_by_topic(*topic_list):
     opts = topic_dict[topic_list[0]]
     for i in topic_list[1:]:
@@ -72,6 +76,7 @@ def get_by_topic(*topic_list):
     return random.choice(list(opts))()
 
 def get_any():
+    return get_by_topic('circles')
     actions = set()
     for i in topic_dict:
         actions.update(topic_dict[i])
