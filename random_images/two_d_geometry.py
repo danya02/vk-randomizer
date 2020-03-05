@@ -1,4 +1,14 @@
+# ===== BEGIN block to import pygame =====
+import sys
+null = open('/dev/null','w')
+o,e = sys.stdout,sys.stderr
+sys.stdout = sys.stderr = null
 import pygame
+sys.stdout = o
+sys.stderr = e
+null.close()
+del null
+# ===== END block to import pygame =====
 try:
     from . import temp_file
 except:
