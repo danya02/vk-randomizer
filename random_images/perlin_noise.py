@@ -44,8 +44,10 @@ def generate_colorful(width, height, zoff=0,
         gpy=random.randint(-100000,100000)+random.random(),
         bpx=random.randint(-100000,100000)+random.random(),
         bpy=random.randint(-100000,100000)+random.random(),
-        octaves=4, fac_boost=lambda x:x*4,
-        px_step=lambda x:x+0.005, py_step=lambda y:y+0.005):
+        octaves=4, fac_boost=lambda x:x*2,
+        rpx_step=lambda x:x+0.005, rpy_step=lambda y:y+0.005,
+        gpx_step=lambda x:x+0.005, gpy_step=lambda y:y+0.005,
+        bpx_step=lambda x:x+0.005, bpy_step=lambda y:y+0.005):
     surface = pygame.Surface((width, height))
     surface.fill(pygame.Color(*bg_color))
     rpx_init = rpx
@@ -65,12 +67,12 @@ def generate_colorful(width, height, zoff=0,
                     clamp(bg_color[1] + gt * (fg_color[1] - bg_color[1])),
                     clamp(bg_color[2] + bt * (fg_color[2] - bg_color[2]))
                     )
-            rpx = px_step(rpx)
-            gpx = px_step(gpx)
-            bpx = px_step(bpx)
-        rpy = py_step(rpy)
-        gpy = py_step(gpy)
-        bpy = py_step(bpy)
+            rpx = rpx_step(rpx)
+            gpx = gpx_step(gpx)
+            bpx = bpx_step(bpx)
+        rpy = rpy_step(rpy)
+        gpy = gpy_step(gpy)
+        bpy = bpy_step(bpy)
     del buf
     tf = temp_file.TemporaryFile.generate_new('png')
     pygame.image.save(surface, tf)

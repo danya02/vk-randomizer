@@ -10,7 +10,7 @@ class TemporaryFile(str):
     @staticmethod
     def generate_new(ext=''):
         '''Create a new temp file path with an optional extension.'''
-        return TemporaryFile('/tmp/'+str(uuid.uuid4())+'.'+ext)
+        return TemporaryFile('/var/tmp/'+str(uuid.uuid4())+'.'+ext)
 
     def persist(self):
         '''
