@@ -1,13 +1,17 @@
 import random
 import colorsys
+import os
 from . import perlin_noise
 from . import two_d_geometry
 from . import two_d_plots
+from . import sandpiles
 
 width=512
 height=512
 
 topic_dict = dict()
+
+SANDPILE_DIR = '/home/danya/sandpile'
 
 def topics(*topic_list):
     def decorate(func):
@@ -44,9 +48,13 @@ def colorful_perlin_noise():
     if random.random()>0.5:
         bg_color,fg_color = fg_color, bg_color
 
-    step=random.random()/5
+    rstep=random.random()/5
+    gstep=random.random()/5
+    bstep=random.random()/5
     return perlin_noise.generate_colorful(width,height,fg_color=fg_color,bg_color=bg_color,
-            px_step=lambda x:x+step, py_step=lambda y:y+step, octaves=random.randint(1,7))
+            rpx_step=lambda x:x+rstep, rpy_step=lambda y:y+rstep,
+            gpx_step=lambda x:x+gstep, gpy_step=lambda y:y+gstep,
+            bpx_step=lambda x:x+bstep, bpy_step=lambda y:y+bstep, octaves=random.randint(1,7))
     
 @topics('geometry','2d','lines','monochrome')
 def mono_lines():
@@ -74,6 +82,27 @@ def color_tris():
 def polynom():
     return two_d_plots.plot_random_polynominal()
 
+@topics('math','2d','sandpile','tropical_curve')
+def tropical_curve():
+    if not os.path.exists(SANDPILE_DIR):
+        print('Tried to run a sandpile, but the dir for sandpiles did not exist')
+        return get_any()
+    return sandpiles.sandpile_tropical_curve(width, height, SANDPILE_DIR)
+
+@topics('math','2d','sandpile','sandpile_infinite', 'von-neumann')
+def single_point_sandpile():
+    if not os.path.exists(SANDPILE_DIR):
+        print('Tried to run a sandpile, but the dir for sandpiles did not exist')
+        return get_any()
+    return sandpiles.sandpile_single_point(width, height, SANDPILE_DIR)
+
+@topics('math','2d','sandpile','sandpile_infinite', 'moore')
+def single_point_sandpile_moore():
+    if not os.path.exists(SANDPILE_DIR):
+        print('Tried to run a sandpile, but the dir for sandpiles did not exist')
+        return get_any()
+    return sandpiles.sandpile_single_point(width, height, SANDPILE_DIR, eight_way_neighborhood=True)
+
 def get_by_topic(*topic_list):
     opts = topic_dict[topic_list[0]]
     for i in topic_list[1:]:
@@ -81,7 +110,7 @@ def get_by_topic(*topic_list):
     return random.choice(list(opts))()
 
 def get_any():
-    return get_by_topic('polynominal')
+#    return get_by_topic('moore')
     actions = set()
     for i in topic_dict:
         actions.update(topic_dict[i])

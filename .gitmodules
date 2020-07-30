@@ -1,0 +1,3 @@
+[submodule "stories/twemoji-color-font"]
+	path = stories/twemoji-color-font
+	url = https://github.com/eosrei/twemoji-color-font
